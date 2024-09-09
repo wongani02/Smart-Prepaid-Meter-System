@@ -88,7 +88,15 @@ class PrepaidBalanceConsumer(AsyncWebsocketConsumer):
 
 
 class ElectricityConsumptionConsumer(AsyncWebsocketConsumer):
-    pass
+    async def connect(self):
+        return await super().connect()
 
+
+    async def receive(self, text_data=None, bytes_data=None):
+        pass
+
+
+    async def disconnect(self, code):
+        pass
 
     
