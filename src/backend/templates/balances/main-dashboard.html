@@ -3215,7 +3215,7 @@
 
     <script>
         // Establish a WebSocket connection
-        const socket = new WebSocket(`ws://${window.location.host}/ws/balance/{{meter_details.meter_number}}/`);
+        const socket = new WebSocket(`wss://${window.location.host}/ws/balance/{{meter_details.meter_number}}/`);
 
         // Get the HTML element where the balance will be displayed
         const balanceElement = document.getElementById('current-balance');
