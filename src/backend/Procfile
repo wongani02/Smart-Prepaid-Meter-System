@@ -1,1 +1,1 @@
-web: daphne -b 0.0.0.0 -p 8000 core.asgi:application 
+web: gunicorn myproject.asgi:application -k uvicorn_worker.UvicornWorker
