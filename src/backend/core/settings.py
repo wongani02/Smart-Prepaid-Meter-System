@@ -96,11 +96,10 @@ CORS_ORIGIN_WHITELIST = (
 
 CHANNEL_LAYERS = {
     'default': {
-        # 'BACKEND': 'channels.layers.InMemoryChannelLayer', 
         
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('localhost', 6379)],
+            "hosts": [("redis://default:mQRDzqRvtgiBRqdG@redis.railway.internal:6379")],
         },
     },
 }
