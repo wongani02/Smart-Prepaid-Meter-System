@@ -94,13 +94,19 @@ CORS_ORIGIN_WHITELIST = (
   'https://*.railway.app',
 )
 
+
+
 CHANNEL_LAYERS = {
     'default': {
         
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
+            # Local
             # "hosts": [("localhost", 6379)],
-            "hosts": [("redis://default:mQRDzqRvtgiBRqdG@redis.railway.internal", 6379)]
+            # Public
+            # "hosts": [("redis://default:mQRDzqRvtgiqvVaqMESlvjCbxQnBRqdG@junction.proxy.rlwy.net:58012")],
+            # Internal 
+            "hosts": [("redis://default:mQRDzqRvtgiqvVaqMESlvjCbxQnBRqdG@redis.railway.internal:6379")]
         },
     },
 }
