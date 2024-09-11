@@ -6,7 +6,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 
 from accounts.models import AccountMeter
-from balances.models import ElectricityBalance
+from balances.models import ElectricityBalance, ElectrictyBalanceLog
 
 
 class PrepaidBalanceConsumer(AsyncWebsocketConsumer):
@@ -89,14 +89,64 @@ class PrepaidBalanceConsumer(AsyncWebsocketConsumer):
 
 class ElectricityConsumptionConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        return await super().connect()
+        meter_number = self.scope['url_route']['kwargs']['meter_number']
+        self.meter_number = meter_number
+
+        self.room_group_name = f'consumption-{meter_number}'
+    
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+
+        await self.accept()
 
 
     async def receive(self, text_data=None, bytes_data=None):
-        pass
+        consumption = json.loads(text_data)
 
+        current = consumption["irms"]
+        voltage = consumption['voltage']
+        apparent_power = consumption['apparent_power']
 
-    async def disconnect(self, code):
-        pass
+        await self.save_consumption_data(self.meter_number, voltage, current, apparent_power)
+
+        await self.channel_layer.group_send(self.room_group_name, {
+            'type': 'consumption_status',
+            'Recieved': True
+        })
 
     
+    async def consumption_status(self, event):
+
+        consumption = event['Recieved']
+
+        await self.send(text_data=json.dumps({
+            'meter_no': f'{self.meter_number}',
+            'Recieved': consumption
+        }))
+        
+
+    async def disconnect(self, close_code):
+        print(f'disconnected with close code: {close_code}')
+
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+    
+    async def save_consumption_data(self, meter_no, voltage, irms, apparent_power):
+        await self.update_consumption(meter_no, voltage, irms, apparent_power)
+
+    
+    @database_sync_to_async
+    def update_consumption(self, meter_no, voltage, irms, apparent_power):
+        meter = get_object_or_404(AccountMeter, meter_number=meter_no)
+        
+        ElectrictyBalanceLog.objects.create(
+            meter_no=meter,
+            current_usage = irms,
+            voltage_usage =voltage,
+            apparent_power=apparent_power,
+            balance=None
+        )
+
+        
+        

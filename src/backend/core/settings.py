@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+from import_export.formats.base_formats import CSV, XLSX
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -50,7 +52,6 @@ INSTALLED_APPS = [
     'import_export',
     'django_extensions',
     'channels',
-
 ]
 
 MIDDLEWARE = [
@@ -158,3 +159,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GRAPH_MODELS = {
   'app_labels': ["accounts", "payments", "balances"],
 }
+
+# multiple import options
+IMPORT_FORMATS = [CSV, XLSX]
+
+# single export options
+EXPORT_FORMATS = [XLSX]

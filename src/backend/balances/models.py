@@ -36,6 +36,7 @@ class ElectrictyBalanceLog(models.Model):
     balance = models.FloatField(null=True)
     current_usage = models.FloatField(null=True)
     voltage_usage = models.FloatField(null=True)
+    apparent_power = models.FloatField(null=True)
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
