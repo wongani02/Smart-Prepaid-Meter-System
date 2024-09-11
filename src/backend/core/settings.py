@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic', 
 
     #local apps
-    'accounts',
-    'balances',
-    'payments',
-    'sockets',
+    'accounts.apps.AccountsConfig',
+    'balances.apps.BalancesConfig',
+    'payments.apps.PaymentsConfig',
+    'sockets.apps.SocketsConfig',
 
     #third party
     'import_export',
