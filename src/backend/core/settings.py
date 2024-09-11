@@ -106,7 +106,7 @@ CHANNEL_LAYERS = {
             # Public
             # "hosts": [("redis://default:mQRDzqRvtgiqvVaqMESlvjCbxQnBRqdG@junction.proxy.rlwy.net:58012")],
             # Internal 
-            "hosts": [("redis://default:mQRDzqRvtgiqvVaqMESlvjCbxQnBRqdG@redis.railway.internal:6379")]
+            "hosts": [("redis://default:Ytn7mUi7d68uBDOMeWtVEJ1KgK33dP44@redis-19515.c341.af-south-1-1.ec2.redns.redis-cloud.com:19515")]
         },
     },
 }
