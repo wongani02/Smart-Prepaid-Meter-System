@@ -25,3 +25,8 @@ class ElectricityBalanceLogModelAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_classes = [ElectricityBalanceLogResource]
 
 admin.site.register(Token)
+
+
+admin.site.site_header = "Prepaid and Anomaly Detection System"
+admin.site.site_title = "Prepaid and Anomaly Detection System"
+admin.site.index_title = "Prepaid and Anomaly Detection System"
