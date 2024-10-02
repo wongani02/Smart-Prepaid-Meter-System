@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'balances.apps.BalancesConfig',
     'payments.apps.PaymentsConfig',
     'sockets.apps.SocketsConfig',
+    'api',
 
     #third party
     'import_export',
@@ -114,13 +115,25 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway', 
+        'USER': 'postgres',
+        'PASSWORD': 'byjkDLZypgiLhVIxkQjVHXFMsVEfrquo',
+        'HOST': 'junction.proxy.rlwy.net', 
+        'PORT': '53490',
     }
 }
 
+#'postgresql://postgres:byjkDLZypgiLhVIxkQjVHXFMsVEfrquo@junction.proxy.rlwy.net:53490/railway'
 # User model
 AUTH_USER_MODEL = "accounts.Account"
 

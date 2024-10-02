@@ -1,6 +1,7 @@
 
 from django.db import models
 
+from balances.model_utils import generate_random_voltage
 from payments.models import Payment
 from accounts.models import AccountMeter
 
@@ -41,3 +42,25 @@ class ElectrictyBalanceLog(models.Model):
 
     def __str__(self):
         return str(self.balance)
+    
+
+class LightSwitch(models.Model):
+    meter_no = models.ForeignKey(AccountMeter, on_delete=models.CASCADE, null=True)
+    current_usage = models.FloatField(null=True)
+    voltage_usage = models.FloatField(null=True, default=generate_random_voltage)
+    apparent_power = models.FloatField(null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return f'{self.current_usage}A - {self.voltage_usage}V '
+
+
+class SocketSwitch(models.Model):
+    meter_no = models.ForeignKey(AccountMeter, on_delete=models.CASCADE, null=True)
+    current_usage = models.FloatField(null=True)
+    voltage_usage = models.FloatField(null=True, default=generate_random_voltage)
+    apparent_power = models.FloatField(null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return f'{self.current_usage}A - {self.voltage_usage}V '

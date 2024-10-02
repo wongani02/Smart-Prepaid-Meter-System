@@ -148,5 +148,3 @@ class ElectricityConsumptionConsumer(AsyncWebsocketConsumer):
             balance=None
         )
 
-        
-        
