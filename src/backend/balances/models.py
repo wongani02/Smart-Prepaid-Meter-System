@@ -64,3 +64,14 @@ class SocketSwitch(models.Model):
 
     def __str__(self):
         return f'{self.current_usage}A - {self.voltage_usage}V '
+    
+
+    def save(self, *args, **kwargs):
+        # Calculate the apparent power as voltage * current
+        if self.current_usage is not None and self.voltage_usage is not None:
+            self.apparent_power = self.current_usage * self.voltage_usage
+        else:
+            self.apparent_power = None
+        
+        # Call the original save method to persist the data
+        super(SocketSwitch, self).save(*args, **kwargs)
