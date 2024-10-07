@@ -34,34 +34,39 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
+    # 'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic', 
 
     #local apps
-    'accounts',
-    'balances',
-    'payments',
-    'sockets',
+    'accounts.apps.AccountsConfig',
+    'balances.apps.BalancesConfig',
+    'payments.apps.PaymentsConfig',
+    'sockets.apps.SocketsConfig',
+    'api',
 
     #third party
     'import_export',
     'django_extensions',
     'channels',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -85,13 +90,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
 
+CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
+CORS_ORIGIN_WHITELIST = (
+  'https://*.railway.app',
+)
+
+
+
 CHANNEL_LAYERS = {
     'default': {
-        # 'BACKEND': 'channels.layers.InMemoryChannelLayer', 
         
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('localhost', 6379)],
+            # Local
+            # "hosts": [("localhost", 6379)],
+            # Public
+            # "hosts": [("redis://default:mQRDzqRvtgiqvVaqMESlvjCbxQnBRqdG@junction.proxy.rlwy.net:58012")],
+            # Internal 
+            "hosts": [("redis://default:Ytn7mUi7d68uBDOMeWtVEJ1KgK33dP44@redis-19515.c341.af-south-1-1.ec2.redns.redis-cloud.com:19515")]
         },
     },
 }
@@ -99,13 +115,25 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway', 
+        'USER': 'postgres',
+        'PASSWORD': 'byjkDLZypgiLhVIxkQjVHXFMsVEfrquo',
+        'HOST': 'junction.proxy.rlwy.net', 
+        'PORT': '53490',
     }
 }
 
+#'postgresql://postgres:byjkDLZypgiLhVIxkQjVHXFMsVEfrquo@junction.proxy.rlwy.net:53490/railway'
 # User model
 AUTH_USER_MODEL = "accounts.Account"
 
@@ -145,6 +173,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = 'static/'
+STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
