@@ -7,5 +7,6 @@ app_name = 'balances'
 
 urlpatterns = [
     path('', views.dashboardView, name='dashboard'),
-    path('token-history', views.tokenHistoryView, name='token-history'),
+    path('token-history/', views.tokenHistoryView, name='token-history'),
+    path('anomaly-dashboard/', views.anomalyDashboard, name='anomaly-dashboard'),
 ]

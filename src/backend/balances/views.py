@@ -37,3 +37,10 @@ def tokenHistoryView(request):
     }
     return render(request, 'balances/history.html', context)
 
+
+def anomalyDashboard(request):
+    
+    context = {
+        
+    }
+    return render(request, 'balances/anomaly.html', context)
