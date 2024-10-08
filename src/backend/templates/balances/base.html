@@ -2170,6 +2170,27 @@
       window.addEventListener("DOMContentLoaded", () => Alpine.start());
     </script>
 
+
+    <script>
+      function fetchData() {
+          fetch('/data/')
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById('actual_power').innerText = data.actual_values[data.actual_values.length - 1];
+              document.getElementById('actual_power2').innerText = data.actual_values2[data.actual_values2.length - 1];
+              document.getElementById('actual_values').innerText = data.actual_values[data.actual_values.length - 1];
+              document.getElementById('predicted_values').innerText = data.predicted_values[data.predicted_values.length - 1];
+              document.getElementById('actual_values2').innerText = data.actual_values2[data.actual_values2.length - 1];
+              document.getElementById('predicted_values2').innerText = data.predicted_values2[data.predicted_values2.length - 1];
+              document.getElementById('anomalies').innerText = data.anomalies.length > 0 ? `${data.anomalies[data.anomalies.length - 1][0]} - ${data.anomalies[data.anomalies.length - 1][1]}` : 'None';
+              document.getElementById('anomalies2').innerText = data.anomalies2.length > 0 ? `${data.anomalies2[data.anomalies2.length - 1][0]} - ${data.anomalies2[data.anomalies2.length - 1][1]}` : 'None';
+          });
+      }
+
+      // Fetch data every 5 seconds
+      setInterval(fetchData, 5000);
+  </script>
+
     
   </body>
 </html>
