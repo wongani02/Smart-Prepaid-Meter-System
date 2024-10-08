@@ -343,40 +343,32 @@
             
 
             <div class="mt-2 space-y-4">
-              <label class="block">
-                <span class="text-xs+">Pay to</span>
-                <input
-                  x-input-mask="{
-                          creditCard: true
-                      }"
-                  class="form-input mt-1.5 h-9 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                  placeholder="1224 653 965 2356"
-                  type="text"
-                />
-              </label>
-              <div>
-                <span class="text-xs+">Amount</span>
+              <form action="{% url 'balances:recharge-electricty' %}" method="post">
+                {% csrf_token %}
+                <label class="block">
+                  <span class="text-xs+">Pay to</span>
+                  {{form.meter_number}}
+                </label>
+                <div>
+                  <span class="text-xs+">Amount</span>
 
-                <div class="mt-1.5 flex h-9 -space-x-px">
-                  <select
-                    class="form-select rounded-l-lg border border-slate-300 bg-white px-3 py-2 pr-9 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent"
-                  >
-                    <option>MK</option>
-                  </select>
-                  <input
-                    class="form-input w-full rounded-r-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                    placeholder="Amount"
-                    type="text"
-                  />
+                  <div class="mt-1.5 flex h-9 -space-x-px">
+                    <select
+                      class="form-select rounded-l-lg border border-slate-300 bg-white px-3 py-2 pr-9 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent"
+                    >
+                      <option>MK</option>
+                    </select>
+                    {{form.amount}}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <button
-              class="btn mt-5 h-10 w-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
-            >
-              Recharge Now
-            </button>
+              <button
+                class="btn mt-5 h-10 w-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+              >
+                Recharge Now
+              </button>
+            </form>
           </div>
         </div>
       </main>

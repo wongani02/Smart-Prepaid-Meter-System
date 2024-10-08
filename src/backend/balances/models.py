@@ -7,11 +7,22 @@ from accounts.models import AccountMeter
 
 # Create your models here.
 
+import random
+import uuid
+
+
+# from .models import BookBus
+
+def create_new_ref_number():
+    
+    return str(random.randint(1000000000, 9999999999))
+
+
 class Token(models.Model):
     payment = models.OneToOneField(Payment, on_delete=models.PROTECT, related_name='token_payment')
 
     meter_no = models.ForeignKey(AccountMeter, on_delete=models.CASCADE, null=True)
-    token = models.PositiveIntegerField(unique=True)
+    token = models.PositiveBigIntegerField(unique=True, default=create_new_ref_number)
 
     is_used = models.BooleanField(default=False)
 
